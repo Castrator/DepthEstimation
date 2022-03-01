@@ -10,12 +10,13 @@ import HSV_filter as hsv
 import shape_recognition as shape
 import triangulation as tri
 
-# Open Cameras
+# Opening of cameras - (Comment out to use SAMPLE IMAGES)
 cap_left = cv2.VideoCapture(2, cv2.CAP_DSHOW)
 cap_right = cv2.VideoCapture(4, cv2.CAP_DSHOW)
 
-# cap_left = 
-# cap_right = 
+# Uncomment to use SAMPLE IMAGES
+# cap_left = cv2.imread('DepthEstimation/images/im1.png')
+# cap_right = cv2.imread('DepthEstimation/images/im2.png')
 
 frame_rate = 120
 
@@ -28,8 +29,15 @@ count = -1
 while(True):
     count += 1
 
+    # Reading camera data (Comment out to use SAMPLE IMAGES)
     ret_left, frame_left = cap_left.read()
     ret_right, frame_right = cap_right.read()
+
+    # Uncomment to use SAMPLE IMAGES
+    # ret_left = True
+    # frame_left = cv2.imread('DepthEstimation/images/im1.png')
+    # ret_right = True
+    # frame_right = cv2.imread('DepthEstimation/images/im2.png')
 
     if ret_right == False or ret_left == False:
         break
