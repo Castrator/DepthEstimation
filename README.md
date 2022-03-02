@@ -24,7 +24,7 @@ After masking, we proceed to detecting the shapes in the frame in `shape_recogni
 * finding the centroid
 * drawing a shape around the contour
 
-https://pyimagesearch.com/2016/02/01/opencv-center-of-contour/
+https://pyimagesearch.com/2016/02/01/opencv-center-of-contour/<br/>
 https://stackoverflow.com/questions/40203932/drawing-a-rectangle-around-all-contours-in-opencv-python
 
 ### _Triangulation:_<br/>
