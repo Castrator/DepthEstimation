@@ -11,15 +11,23 @@ def add_HSV_filter(frame, camera):
     hsv = cv2.cvtColor(blur, cv2.COLOR_BGR2HSV)
 
     # Assigning LOWERBOUND and UPPERBOUND for left and right cameras
-    l_b_l = np.array([143, 110, 50])
-    u_b_l = np.array([255, 255, 255])
-    l_b_r = np.array([143, 110, 50])
-    u_b_r = np.array([255, 255, 255])
+    
+    # BLUE
+    lower_bound = np.array([100,100,80])
+    upper_bound = np.array([140,250,250])
+
+    # RED
+    # lower_bound = np.array([160,100,100])
+    # upper_bound = np.array([180,250,250])
+
+    # GREEN
+    # lower_bound = np.array([40,80,100])
+    # upper_bound = np.array([80,250,250])
 
     if (camera == 2):
-        mask = cv2.inRange(hsv, l_b_l, u_b_l)
+        mask = cv2.inRange(hsv, lower_bound, upper_bound)
     else:
-        mask = cv2.inRange(hsv, l_b_r, u_b_r)
+        mask = cv2.inRange(hsv, lower_bound, upper_bound)
 
     # Noise removal
     mask = cv2.erode(mask, None, iterations=2)

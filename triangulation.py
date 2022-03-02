@@ -1,8 +1,4 @@
-import sys
-import cv2
-from cv2 import circle
 import numpy as np
-import time
 
 def find_depth(circles_right, circles_left, frame_right, frame_left, baseline, f, alpha):
 
@@ -10,11 +6,12 @@ def find_depth(circles_right, circles_left, frame_right, frame_left, baseline, f
     height_left, width_left, depth_left = frame_left.shape
     height_right, width_right, depth_right = frame_right.shape
 
+    # Standard formula for [mm] to [pixel] conversion
     if width_left == width_right:
         f_pixel = (width_right * 0.5) / np.tan(alpha * 0.5 * np.pi/180)
     else:
         print("Left and right camera frames do not have the same pixel width")
-
+    
     x_left = circles_left[0]
     x_right = circles_right[0]
 
