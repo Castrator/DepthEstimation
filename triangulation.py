@@ -1,6 +1,6 @@
 import numpy as np
 
-def find_depth(circles_right, circles_left, frame_right, frame_left, baseline, f, alpha):
+def find_depth(shape_right, shape_left, frame_right, frame_left, baseline, f, alpha):
 
     # Converting FOCAL LENGTH (f) from [mm] to [pixel]
     height_left, width_left, depth_left = frame_left.shape
@@ -12,9 +12,10 @@ def find_depth(circles_right, circles_left, frame_right, frame_left, baseline, f
     else:
         print("Left and right camera frames do not have the same pixel width")
 
-    # Getting x coordinate of left and right circles
-    x_left = circles_left[0]
-    x_right = circles_right[0]
+    # Getting x coordinate of left and right shape
+    # xL and xR
+    x_left = shape_left[0]
+    x_right = shape_right[0]
 
     # Calculating the DISPARITY
     # d = xL - xR
