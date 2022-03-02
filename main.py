@@ -17,15 +17,12 @@ cap_right = cv2.VideoCapture(4)
 
 frame_rate = 120
 
-B = 9                   # Distance between the cameras [cm]
+# Replace values accordingly for best results
+B = 9                  # Distance between the cameras [cm]
 f = 6                   # Camera Lense's focal length [mm]
 alpha = 56.6            # Camera field of view in the horizontal plane [degrees]
 
-count = -1
-
 while(True):
-    count += 1
-
     # Reading camera data (Comment out to use SAMPLE IMAGES)
     ret_left, frame_left = cap_left.read()
     ret_right, frame_right = cap_right.read()
@@ -45,23 +42,22 @@ while(True):
     res_right = cv2.bitwise_and(frame_right, frame_right, mask=mask_right)
     
     # Applying SHAPE RECOGNITION
-    circles_left = shape.find_circles(frame_left, mask_left)
-    circles_right = shape.find_circles(frame_right, mask_right)
+    shape_left = shape.find_shape(frame_left, mask_left, 'rectangle')
+    shape_right = shape.find_shape(frame_right, mask_right, 'rectangle')
 
     # Calculating DEPTH
-    if np.all(circles_right) == None or np.all(circles_left) == None:
+    if np.all(shape_right) == None or np.all(shape_left) == None:
         cv2.putText(frame_left, "TRACKING LOST", (75,50), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,255), 2)
         cv2.putText(frame_right, "TRACKING LOST", (75,50), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,255), 2)
     else:
-        depth = tri.find_depth(circles_right, circles_left, frame_right, frame_left, B, f, alpha)
+        depth = tri.find_depth(shape_right, shape_left, frame_right, frame_left, B, f, alpha)
         # print("Depth: ", depth)
         
-        cv2.putText(frame_left, "TRACKING", (75,50), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (124,252,255), 2)
-        cv2.putText(frame_right, "TRACKING", (75,50), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (124,252,255), 2)
-        cv2.putText(frame_left, "Distance: " +  str(round(depth,3)), (200,50), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,255), 2)
-        cv2.putText(frame_right, "Distance: " + str(round(depth,3)), (200,50), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,255), 2)
+        cv2.putText(frame_left, "TRACKING", (75,50), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (50,230,0), 2)
+        cv2.putText(frame_right, "TRACKING", (75,50), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (50,230,0), 2)
+        cv2.putText(frame_left, "Distance: " +  str(round(depth,3)) + " cm", (200,50), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (50,230,0), 2)
+        cv2.putText(frame_right, "Distance: " + str(round(depth,3)) + " cm", (200,50), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (50,230,0), 2)
         
-
     # HSV to BGR
     mask_left = cv2.cvtColor(mask_left, cv2.COLOR_GRAY2BGR)
     mask_right = cv2.cvtColor(mask_right, cv2.COLOR_GRAY2BGR)
